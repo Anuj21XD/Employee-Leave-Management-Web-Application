@@ -1,0 +1,13 @@
+.leave-card {
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.leave-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.leave-table tbody tr:hover {
+  background-color: #f8fafc;
+}
