@@ -1,4 +1,10 @@
+import { useNavigate } from "react-router-dom";
+
+
+
 const QuickActions = () => {
+  const navigate = useNavigate();
+ 
   return (
     <div
       style={{
@@ -8,6 +14,7 @@ const QuickActions = () => {
       }}
     >
       <button
+        onClick={() => navigate("/employee/apply-leave")}
         style={{
            padding: "12px 24px",
            backgroundColor: "#2563eb",
