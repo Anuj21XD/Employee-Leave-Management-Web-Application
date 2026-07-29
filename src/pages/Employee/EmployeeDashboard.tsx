@@ -1,3 +1,5 @@
+import LeaveBalance from "../../components/employee/LeaveBalance";
+
 const EmployeeDashboard = () => {
   return (
     <div
@@ -12,7 +14,8 @@ const EmployeeDashboard = () => {
       <p>Welcome back!</p>
 
       <section style={{ marginTop: "2rem" }}>
-        <h2>Leave Balance</h2>
+       <h2>Leave Balance</h2>
+       <LeaveBalance />
       </section>
 
       <section style={{ marginTop: "2rem" }}>
