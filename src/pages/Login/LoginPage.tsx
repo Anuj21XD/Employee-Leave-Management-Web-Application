@@ -1,9 +1,21 @@
-function LoginPage() {
+import LoginForm from "../../components/auth/LoginForm";
+
+const LoginPage = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <h1 className="text-4xl font-bold">Login Page</h1>
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background:
+          "linear-gradient(to right, #dbeafe, #eff6ff, #dbeafe)",
+        padding: "20px",
+      }}
+    >
+      <LoginForm />
     </div>
   );
-}
+};
 
 export default LoginPage;
