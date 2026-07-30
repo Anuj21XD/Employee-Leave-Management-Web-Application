@@ -1,14 +1,13 @@
-import LeaveForm from "../../components/leave/LeaveForm";
+import LeaveHistoryTable from "../../components/leave/LeaveHistoryTable";
 import { useNavigate } from "react-router-dom";
 
 
-
-const ApplyLeave = () => {
+const LeaveHistory = () => {
   const navigate = useNavigate();  
   return (
     <div
       style={{
-        maxWidth: "850px",
+        maxWidth: "1100px",
         margin: "40px auto",
         padding: "30px",
       }}
@@ -28,7 +27,7 @@ const ApplyLeave = () => {
       >
         ← Back to Dashboard
       </button>
-      
+
       <h1
         style={{
           color: "#1e40af",
@@ -37,7 +36,7 @@ const ApplyLeave = () => {
           marginBottom: "10px",
         }}
       >
-        Apply Leave
+        Leave History
       </h1>
 
       <p
@@ -47,12 +46,12 @@ const ApplyLeave = () => {
           marginBottom: "35px",
         }}
       >
-        Fill in the details below to submit your leave request.
+        View all your submitted leave requests.
       </p>
 
-      <LeaveForm />
+      <LeaveHistoryTable />
     </div>
   );
 };
 
-export default ApplyLeave;
+export default LeaveHistory;

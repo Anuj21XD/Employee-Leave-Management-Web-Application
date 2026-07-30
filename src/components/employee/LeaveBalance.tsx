@@ -1,8 +1,23 @@
+import type { User } from "../../models/User";
+
 const LeaveBalance = () => {
+  const currentUser = JSON.parse(
+    localStorage.getItem("currentUser") || "{}"
+  ) as User;
+
   const balances = [
-    { title: "Casual Leave", days: 8 },
-    { title: "Sick Leave", days: 12 },
-    { title: "Earned Leave", days: 15 },
+    {
+      title: "Casual Leave",
+      days: currentUser.leaveBalance?.casual ?? 0,
+    },
+    {
+      title: "Sick Leave",
+      days: currentUser.leaveBalance?.sick ?? 0,
+    },
+    {
+      title: "Earned Leave",
+      days: currentUser.leaveBalance?.earned ?? 0,
+    },
   ];
 
   return (
@@ -16,7 +31,6 @@ const LeaveBalance = () => {
       {balances.map((leave) => (
         <div
           key={leave.title}
-          className="leave-card"
           style={{
             flex: 1,
             border: "1px solid #e5e7eb",

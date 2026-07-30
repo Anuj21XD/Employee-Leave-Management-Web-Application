@@ -3,6 +3,10 @@ import LoginPage from "../pages/Login/LoginPage";
 import EmployeeDashboard from "../pages/Employee/EmployeeDashboard";
 import ApplyLeave from "../pages/Employee/ApplyLeave";
 import ManagerDashboard from "../pages/Manager/ManagerDashboard";
+import LeaveHistory from "../pages/Employee/LeaveHistory";
+
+
+
 
 function AppRouter() {
   return (
@@ -14,10 +18,8 @@ function AppRouter() {
 
         {/* Employee */}
         <Route path="/employee" element={<EmployeeDashboard />} />
-        <Route
-          path="/employee/apply-leave"
-          element={<ApplyLeave />}
-        />
+        <Route path="/employee/apply-leave" element={<ApplyLeave />} />
+        <Route path="/employee/leave-history" element={<LeaveHistory />} />
 
         {/* Manager */}
         <Route path="/manager" element={<ManagerDashboard />} />

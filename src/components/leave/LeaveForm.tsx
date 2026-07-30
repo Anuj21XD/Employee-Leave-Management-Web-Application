@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { addLeave } from "../../services/leaveService";
+import type { Leave, LeaveType } from "../../models/Leave";
+import type { User } from "../../models/User";
 
 const LeaveForm = () => {
   const [leaveType, setLeaveType] = useState("Casual Leave");
@@ -57,19 +60,39 @@ const LeaveForm = () => {
       isValid = false;
     }
 
-    if (
-      startDate &&
-      endDate &&
-      new Date(endDate) < new Date(startDate)
-    ) {
-      newErrors.endDate =
-        "End date cannot be before start date.";
+    if (startDate && endDate && new Date(endDate) < new Date(startDate)) {
+      newErrors.endDate = "End date cannot be before start date.";
       isValid = false;
     }
 
     setErrors(newErrors);
 
     if (!isValid) return;
+
+    const currentUser = JSON.parse(
+      localStorage.getItem("currentUser") || "{}",
+    ) as User;
+
+    const days =
+      Math.floor(
+        (new Date(endDate).getTime() - new Date(startDate).getTime()) /
+          (1000 * 60 * 60 * 24),
+      ) + 1;
+
+    const leave: Leave = {
+      id: Date.now(),
+      employeeId: currentUser.id,
+      employeeName: currentUser.name,
+      leaveType: leaveType as LeaveType,
+      startDate,
+      endDate,
+      numberOfDays: days,
+      reason,
+      status: "Pending",
+      appliedOn: new Date().toLocaleDateString(),
+    };
+
+    addLeave(leave);
 
     alert("Leave request submitted successfully!");
 
