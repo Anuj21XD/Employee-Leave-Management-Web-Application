@@ -1,7 +1,7 @@
 import LeaveBalance from "../../components/employee/LeaveBalance";
 import QuickActions from "../../components/employee/QuickActions";
 import RecentLeaves from "../../components/employee/RecentLeaves";
-
+import LogoutButton from "../../components/common/LogoutButton";
 
 const EmployeeDashboard = () => {
   return (
@@ -13,6 +13,19 @@ const EmployeeDashboard = () => {
         margin: "0 auto",
       }}
     >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "20px",
+        }}
+      >
+        <div></div>
+
+        <LogoutButton />
+      </div>
+      
       <h1
         style={{
           fontSize: "36px",

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { addLeave } from "../../services/leaveService";
 import type { Leave, LeaveType } from "../../models/Leave";
 import type { User } from "../../models/User";
+import { getUserById } from "../../services/userService";
 
 const LeaveForm = () => {
   const [leaveType, setLeaveType] = useState("Casual Leave");
@@ -73,11 +74,44 @@ const LeaveForm = () => {
       localStorage.getItem("currentUser") || "{}",
     ) as User;
 
+    const user = getUserById(currentUser.id);
+
+    if (!user) {
+      alert("User not found.");
+      return;
+    }
+
     const days =
       Math.floor(
         (new Date(endDate).getTime() - new Date(startDate).getTime()) /
           (1000 * 60 * 60 * 24),
       ) + 1;
+
+    let availableBalance = 0;
+
+    switch (leaveType) {
+      case "Casual Leave":
+        availableBalance = user.leaveBalance.casual;
+        break;
+
+      case "Sick Leave":
+        availableBalance = user.leaveBalance.sick;
+        break;
+
+      case "Earned Leave":
+        availableBalance = user.leaveBalance.earned;
+        break;
+
+      default:
+        break;
+    }
+
+    if (days > availableBalance) {
+      alert(
+        `Insufficient ${leaveType} balance.\nAvailable: ${availableBalance} day(s)`,
+      );
+      return;
+    }
 
     const leave: Leave = {
       id: Date.now(),
