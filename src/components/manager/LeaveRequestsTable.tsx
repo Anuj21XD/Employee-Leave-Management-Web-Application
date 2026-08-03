@@ -1,21 +1,23 @@
-import { useState } from "react";
-import {
-  approveLeave,
-  getPendingLeaves,
-  rejectLeave,
-} from "../../services/leaveService";
+import { approveLeave, rejectLeave } from "../../services/leaveService";
+import type { Leave } from "../../models/Leave";
 
-const LeaveRequestsTable = () => {
-  const [requests, setRequests] = useState(getPendingLeaves());
+interface LeaveRequestsTableProps {
+  requests: Leave[];
+  refreshRequests: () => void;
+}
 
+const LeaveRequestsTable = ({
+  requests,
+  refreshRequests,
+}: LeaveRequestsTableProps) => {
   const handleApprove = (id: number) => {
     approveLeave(id);
-    setRequests(getPendingLeaves());
+    refreshRequests();
   };
 
   const handleReject = (id: number) => {
     rejectLeave(id);
-    setRequests(getPendingLeaves());
+    refreshRequests();
   };
 
   if (requests.length === 0) {
@@ -26,7 +28,7 @@ const LeaveRequestsTable = () => {
           fontSize: "17px",
         }}
       >
-        No pending leave requests.
+        No leave requests found.
       </p>
     );
   }
@@ -37,37 +39,176 @@ const LeaveRequestsTable = () => {
       style={{
         width: "100%",
         borderCollapse: "collapse",
+        background: "white",
       }}
     >
-      <thead>
+      <thead
+        style={{
+          background: "#eff6ff",
+        }}
+      >
         <tr>
-          <th>Employee</th>
-          <th>Leave Type</th>
-          <th>From</th>
-          <th>To</th>
-          <th>Days</th>
-          <th>Reason</th>
-          <th>Status</th>
-          <th>Actions</th>
+          <th
+            style={{
+              padding: "18px",
+              color: "#1e3a8a",
+              fontSize: "17px",
+              fontWeight: "700",
+              textAlign: "center",
+            }}
+          >
+            Employee
+          </th>
+          <th
+            style={{
+              padding: "18px",
+              color: "#1e3a8a",
+              fontSize: "17px",
+              fontWeight: "700",
+              textAlign: "center",
+            }}
+          >
+            Leave Type
+          </th>
+          <th
+            style={{
+              padding: "18px",
+              color: "#1e3a8a",
+              fontSize: "17px",
+              fontWeight: "700",
+              textAlign: "center",
+            }}
+          >
+            From
+          </th>
+          <th
+            style={{
+              padding: "18px",
+              color: "#1e3a8a",
+              fontSize: "17px",
+              fontWeight: "700",
+              textAlign: "center",
+            }}
+          >
+            To
+          </th>
+          <th
+            style={{
+              padding: "18px",
+              color: "#1e3a8a",
+              fontSize: "17px",
+              fontWeight: "700",
+              textAlign: "center",
+            }}
+          >
+            Days
+          </th>
+          <th
+            style={{
+              padding: "18px",
+              color: "#1e3a8a",
+              fontSize: "17px",
+              fontWeight: "700",
+              textAlign: "center",
+            }}
+          >
+            Reason
+          </th>
+          <th
+            style={{
+              padding: "18px",
+              color: "#1e3a8a",
+              fontSize: "17px",
+              fontWeight: "700",
+              textAlign: "center",
+            }}
+          >
+            Status
+          </th>
+          <th
+            style={{
+              padding: "18px",
+              color: "#1e3a8a",
+              fontSize: "17px",
+              fontWeight: "700",
+              textAlign: "center",
+            }}
+          >
+            Actions
+          </th>
         </tr>
       </thead>
 
       <tbody>
         {requests.map((leave) => (
           <tr key={leave.id}>
-            <td>{leave.employeeName}</td>
+            <td
+              style={{
+                padding: "18px",
+                borderBottom: "1px solid #e5e7eb",
+                textAlign: "center",
+              }}
+            >
+              {leave.employeeName}
+            </td>
 
-            <td>{leave.leaveType}</td>
+            <td
+              style={{
+                padding: "18px",
+                borderBottom: "1px solid #e5e7eb",
+                textAlign: "center",
+              }}
+            >
+              {leave.leaveType}
+            </td>
 
-            <td>{leave.startDate}</td>
+            <td
+              style={{
+                padding: "18px",
+                borderBottom: "1px solid #e5e7eb",
+                textAlign: "center",
+              }}
+            >
+              {leave.startDate}
+            </td>
 
-            <td>{leave.endDate}</td>
+            <td
+              style={{
+                padding: "18px",
+                borderBottom: "1px solid #e5e7eb",
+                textAlign: "center",
+              }}
+            >
+              {leave.endDate}
+            </td>
 
-            <td>{leave.numberOfDays}</td>
+            <td
+              style={{
+                padding: "18px",
+                borderBottom: "1px solid #e5e7eb",
+                textAlign: "center",
+              }}
+            >
+              {leave.numberOfDays}
+            </td>
 
-            <td>{leave.reason}</td>
+            <td
+              style={{
+                padding: "18px",
+                borderBottom: "1px solid #e5e7eb",
+                textAlign: "center",
+              }}
+            >
+              {leave.reason}
+            </td>
 
-            <td>
+            <td
+              style={{
+                padding: "18px",
+                borderBottom: "1px solid #e5e7eb",
+                textAlign: "center",
+              }}
+            >
               <span
                 style={{
                   background: "#fef3c7",
@@ -81,41 +222,63 @@ const LeaveRequestsTable = () => {
               </span>
             </td>
 
-            <td>
-              <div
-                style={{
-                  display: "flex",
-                  gap: "10px",
-                }}
-              >
-                <button
-                  onClick={() => handleApprove(leave.id)}
+            <td
+              style={{
+                padding: "18px",
+                borderBottom: "1px solid #e5e7eb",
+                textAlign: "center",
+              }}
+            >
+              {leave.status === "Pending" ? (
+                <div
                   style={{
-                    background: "#22c55e",
-                    color: "white",
-                    border: "none",
-                    padding: "8px 12px",
-                    borderRadius: "8px",
-                    cursor: "pointer",
+                    display: "flex",
+                    gap: "10px",
+                    justifyContent: "center",
                   }}
                 >
-                  Approve
-                </button>
+                  <button
+                    onClick={() => handleApprove(leave.id)}
+                    style={{
+                      background: "#22c55e",
+                      color: "white",
+                      border: "none",
+                      padding: "8px 12px",
+                      borderRadius: "8px",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Approve
+                  </button>
 
-                <button
-                  onClick={() => handleReject(leave.id)}
+                  <button
+                    onClick={() => handleReject(leave.id)}
+                    style={{
+                      background: "#ef4444",
+                      color: "white",
+                      border: "none",
+                      padding: "8px 12px",
+                      borderRadius: "8px",
+                      fontSize: "14px",
+                      fontWeight: "600",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Reject
+                  </button>
+                </div>
+              ) : (
+                <span
                   style={{
-                    background: "#ef4444",
-                    color: "white",
-                    border: "none",
-                    padding: "8px 12px",
-                    borderRadius: "8px",
-                    cursor: "pointer",
+                    color: "#6b7280",
+                    fontWeight: "600",
                   }}
                 >
-                  Reject
-                </button>
-              </div>
+                  —
+                </span>
+              )}
             </td>
           </tr>
         ))}

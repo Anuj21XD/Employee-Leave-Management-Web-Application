@@ -27,7 +27,12 @@ export const addLeave = (leave: Leave): void => {
 };
 
 export const getLeavesByEmployee = (employeeId: number): Leave[] => {
-  return getLeaves().filter((leave) => leave.employeeId === employeeId);
+  return getLeaves()
+    .filter((leave) => leave.employeeId === employeeId)
+    .sort(
+      (a, b) =>
+        new Date(b.appliedOn).getTime() - new Date(a.appliedOn).getTime(),
+    );
 };
 
 export const updateLeave = (updatedLeave: Leave): void => {
@@ -48,6 +53,10 @@ export const deleteLeave = (id: number): void => {
 
 export const getPendingLeaves = (): Leave[] => {
   return getLeaves().filter((leave) => leave.status === "Pending");
+};
+
+export const getAllLeaves = (): Leave[] => {
+  return getLeaves();
 };
 
 export const approveLeave = (id: number): void => {

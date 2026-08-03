@@ -1,8 +1,11 @@
 import DashboardCards from "../../components/manager/DashboardCards";
 import LeaveRequestsTable from "../../components/manager/LeaveRequestsTable";
 import LogoutButton from "../../components/common/LogoutButton";
+import { useNavigate } from "react-router-dom";
+
 
 const ManagerDashboard = () => {
+  const navigate = useNavigate();
   return (
     <div
       style={{
@@ -62,20 +65,29 @@ const ManagerDashboard = () => {
         <DashboardCards />
       </section>
 
-      <section style={{ marginTop: "3rem" }}>
-        <h2
+      <div
+        style={{
+          marginTop: "30px",
+        }}
+      >
+        <button
+          onClick={() => navigate("/manager/review-requests")}
           style={{
-            fontSize: "28px",
-            fontWeight: "700",
-            color: "#1e3a8a",
-            marginBottom: "40px",
+            padding: "14px 24px",
+            border: "none",
+            borderRadius: "8px",
+            background: "#2563eb",
+            color: "white",
+            cursor: "pointer",
+            fontWeight: "bold",
+            fontSize: "16px",
           }}
         >
-          Pending Leave Requests
-        </h2>
+          Review Leave Requests →
+        </button>
+      </div>
 
-        <LeaveRequestsTable />
-      </section>
+      
     </div>
   );
 };
