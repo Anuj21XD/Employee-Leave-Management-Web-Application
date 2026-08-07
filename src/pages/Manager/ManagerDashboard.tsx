@@ -1,5 +1,4 @@
 import DashboardCards from "../../components/manager/DashboardCards";
-import LeaveRequestsTable from "../../components/manager/LeaveRequestsTable";
 import LogoutButton from "../../components/common/LogoutButton";
 import { useNavigate } from "react-router-dom";
 

@@ -1,4 +1,8 @@
-import { getLeavesByEmployee } from "../../services/leaveService";
+import { useState } from "react";
+import {
+  getLeavesByEmployee,
+  cancelLeave,
+} from "../../services/leaveService";
 import type { Leave } from "../../models/Leave";
 import type { User } from "../../models/User";
 
@@ -7,7 +11,14 @@ const LeaveHistoryTable = () => {
     localStorage.getItem("currentUser") || "{}"
   ) as User;
 
-  const leaves: Leave[] = getLeavesByEmployee(currentUser.id);
+  const [leaves, setLeaves] = useState<Leave[]>(
+    getLeavesByEmployee(currentUser.id)
+  );
+
+  const handleCancel = (id: number) => {
+    cancelLeave(id);
+    setLeaves(getLeavesByEmployee(currentUser.id));
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -16,6 +27,9 @@ const LeaveHistoryTable = () => {
 
       case "Rejected":
         return "#dc2626";
+
+      case "Cancelled":
+        return "#6b7280";
 
       default:
         return "#d97706";
@@ -70,6 +84,7 @@ const LeaveHistoryTable = () => {
             <th style={headerStyle}>Reason</th>
             <th style={headerStyle}>Applied On</th>
             <th style={headerStyle}>Status</th>
+            <th style={headerStyle}>Actions</th>
           </tr>
         </thead>
 
@@ -84,18 +99,71 @@ const LeaveHistoryTable = () => {
               <td style={cellStyle}>{leave.appliedOn}</td>
 
               <td style={cellStyle}>
-                <span
+                <div
                   style={{
-                    background: getStatusColor(leave.status),
-                    color: "white",
-                    padding: "6px 12px",
-                    borderRadius: "999px",
-                    fontWeight: "bold",
-                    fontSize: "14px",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "8px",
                   }}
                 >
-                  {leave.status}
-                </span>
+                  <span
+                    style={{
+                      background: getStatusColor(leave.status),
+                      color: "white",
+                      padding: "6px 12px",
+                      borderRadius: "999px",
+                      fontWeight: "bold",
+                      fontSize: "14px",
+                      minWidth: "95px",
+                      textAlign: "center",
+                    }}
+                  >
+                    {leave.status}
+                  </span>
+
+                  {leave.status === "Rejected" &&
+                    leave.rejectionReason && (
+                      <div
+                        style={{
+                          background: "#fef2f2",
+                          border: "1px solid #fecaca",
+                          color: "#991b1b",
+                          borderRadius: "8px",
+                          padding: "8px",
+                          fontSize: "12px",
+                          textAlign: "center",
+                          maxWidth: "220px",
+                          lineHeight: "1.4",
+                        }}
+                      >
+                        <strong>Reason:</strong>
+                        <br />
+                        {leave.rejectionReason}
+                      </div>
+                    )}
+                </div>
+              </td>
+
+              <td style={cellStyle}>
+                {leave.status === "Pending" ? (
+                  <button
+                    onClick={() => handleCancel(leave.id)}
+                    style={{
+                      background: "#ef4444",
+                      color: "white",
+                      border: "none",
+                      padding: "8px 14px",
+                      borderRadius: "8px",
+                      cursor: "pointer",
+                      fontWeight: "600",
+                    }}
+                  >
+                    Cancel
+                  </button>
+                ) : (
+                  <span style={{ color: "#9ca3af" }}>—</span>
+                )}
               </td>
             </tr>
           ))}

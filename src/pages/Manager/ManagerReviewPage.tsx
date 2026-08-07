@@ -93,7 +93,7 @@ const ManagerReviewPage = () => {
           background: "#ffffff",
           borderRadius: "16px",
           boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-          overflow: "hidden",
+          overflow: "auto",
           marginTop: "20px",
         }}
       >
@@ -132,6 +132,7 @@ const ManagerReviewPage = () => {
             <option>Pending</option>
             <option>Approved</option>
             <option>Rejected</option>
+            <option>Cancelled</option>
           </select>
 
           <select

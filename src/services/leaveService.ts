@@ -106,9 +106,15 @@ export const approveLeave = (id: number): void => {
   }
 };
 
-export const rejectLeave = (id: number): void => {
+export const rejectLeave = (id: number, rejectionReason: string): void => {
   const leaves = getLeaves().map((leave) =>
-    leave.id === id ? { ...leave, status: "Rejected" as const } : leave,
+    leave.id === id
+      ? {
+          ...leave,
+          status: "Rejected" as const,
+          rejectionReason,
+        }
+      : leave,
   );
 
   saveLeaves(leaves);
@@ -116,4 +122,19 @@ export const rejectLeave = (id: number): void => {
 
 export const clearLeaves = (): void => {
   localStorage.removeItem(STORAGE_KEY);
+};
+
+export const cancelLeave = (id: number): void => {
+  const leaves = getLeaves();
+
+  const updatedLeaves = leaves.map((leave) =>
+    leave.id === id
+      ? {
+          ...leave,
+          status: "Cancelled" as const,
+        }
+      : leave,
+  );
+
+  saveLeaves(updatedLeaves);
 };
