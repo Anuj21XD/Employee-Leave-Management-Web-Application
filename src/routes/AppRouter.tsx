@@ -5,6 +5,7 @@ import ApplyLeave from "../pages/Employee/ApplyLeave";
 import ManagerDashboard from "../pages/Manager/ManagerDashboard";
 import LeaveHistory from "../pages/Employee/LeaveHistory";
 import ProtectedRoute from "./ProtectedRoute";
+import ManagerReviewPage from "../pages/Manager/ManagerReviewPage";
 
 function AppRouter() {
   return (
@@ -48,6 +49,15 @@ function AppRouter() {
           element={
             <ProtectedRoute allowedRole="manager">
               <ManagerDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/manager/review-requests"
+          element={
+            <ProtectedRoute allowedRole="manager">
+              <ManagerReviewPage />
             </ProtectedRoute>
           }
         />

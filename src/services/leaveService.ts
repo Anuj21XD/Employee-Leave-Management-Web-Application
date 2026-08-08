@@ -27,7 +27,12 @@ export const addLeave = (leave: Leave): void => {
 };
 
 export const getLeavesByEmployee = (employeeId: number): Leave[] => {
-  return getLeaves().filter((leave) => leave.employeeId === employeeId);
+  return getLeaves()
+    .filter((leave) => leave.employeeId === employeeId)
+    .sort(
+      (a, b) =>
+        new Date(b.appliedOn).getTime() - new Date(a.appliedOn).getTime(),
+    );
 };
 
 export const updateLeave = (updatedLeave: Leave): void => {
@@ -48,6 +53,10 @@ export const deleteLeave = (id: number): void => {
 
 export const getPendingLeaves = (): Leave[] => {
   return getLeaves().filter((leave) => leave.status === "Pending");
+};
+
+export const getAllLeaves = (): Leave[] => {
+  return getLeaves();
 };
 
 export const approveLeave = (id: number): void => {
@@ -97,9 +106,15 @@ export const approveLeave = (id: number): void => {
   }
 };
 
-export const rejectLeave = (id: number): void => {
+export const rejectLeave = (id: number, rejectionReason: string): void => {
   const leaves = getLeaves().map((leave) =>
-    leave.id === id ? { ...leave, status: "Rejected" as const } : leave,
+    leave.id === id
+      ? {
+          ...leave,
+          status: "Rejected" as const,
+          rejectionReason,
+        }
+      : leave,
   );
 
   saveLeaves(leaves);
@@ -107,4 +122,19 @@ export const rejectLeave = (id: number): void => {
 
 export const clearLeaves = (): void => {
   localStorage.removeItem(STORAGE_KEY);
+};
+
+export const cancelLeave = (id: number): void => {
+  const leaves = getLeaves();
+
+  const updatedLeaves = leaves.map((leave) =>
+    leave.id === id
+      ? {
+          ...leave,
+          status: "Cancelled" as const,
+        }
+      : leave,
+  );
+
+  saveLeaves(updatedLeaves);
 };

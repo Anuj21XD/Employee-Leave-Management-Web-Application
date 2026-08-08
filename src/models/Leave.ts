@@ -9,7 +9,8 @@ export type LeaveType =
 export type LeaveStatus =
   | "Pending"
   | "Approved"
-  | "Rejected";
+  | "Rejected"
+  | "Cancelled";
 
 export interface Leave {
   id: number;
@@ -28,4 +29,6 @@ export interface Leave {
   status: LeaveStatus;
 
   appliedOn: string;
+
+  rejectionReason?: string;
 }

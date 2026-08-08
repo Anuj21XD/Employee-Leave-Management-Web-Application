@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addLeave } from "../../services/leaveService";
+import { addLeave, getLeavesByEmployee } from "../../services/leaveService";
 import type { Leave, LeaveType } from "../../models/Leave";
 import type { User } from "../../models/User";
 import { getUserById } from "../../services/userService";
@@ -87,6 +87,29 @@ const LeaveForm = () => {
           (1000 * 60 * 60 * 24),
       ) + 1;
 
+    const existingLeaves = getLeavesByEmployee(currentUser.id);
+
+    const hasOverlap = existingLeaves.some((leave) => {
+      if (leave.status === "Rejected" || leave.status === "Cancelled") {
+        return false;
+      }
+
+      const existingStart = new Date(leave.startDate);
+      const existingEnd = new Date(leave.endDate);
+
+      const newStart = new Date(startDate);
+      const newEnd = new Date(endDate);
+
+      return newStart <= existingEnd && newEnd >= existingStart;
+    });
+
+    if (hasOverlap) {
+      alert(
+        "You already have an Approved or Pending leave request during the selected dates.",
+      );
+      return;
+    }
+    
     let availableBalance = 0;
 
     switch (leaveType) {
