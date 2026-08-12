@@ -148,9 +148,7 @@ const ManagerReviewPage = () => {
             <option>Casual Leave</option>
             <option>Sick Leave</option>
             <option>Earned Leave</option>
-            <option>Work From Home</option>
-            <option>Maternity Leave</option>
-            <option>Paternity Leave</option>
+           
           </select>
 
           <select
