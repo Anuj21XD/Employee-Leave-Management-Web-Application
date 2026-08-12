@@ -5,6 +5,11 @@ import type { User } from "../../models/User";
 import { getUserById } from "../../services/userService";
 
 const LeaveForm = () => {
+  const currentUser = JSON.parse(
+    localStorage.getItem("currentUser") || "{}",
+  ) as User;
+
+  const user = getUserById(currentUser.id);
   const [leaveType, setLeaveType] = useState("Casual Leave");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -70,12 +75,6 @@ const LeaveForm = () => {
 
     if (!isValid) return;
 
-    const currentUser = JSON.parse(
-      localStorage.getItem("currentUser") || "{}",
-    ) as User;
-
-    const user = getUserById(currentUser.id);
-
     if (!user) {
       alert("User not found.");
       return;
@@ -109,7 +108,7 @@ const LeaveForm = () => {
       );
       return;
     }
-    
+
     let availableBalance = 0;
 
     switch (leaveType) {
@@ -210,9 +209,7 @@ const LeaveForm = () => {
           <option>Casual Leave</option>
           <option>Sick Leave</option>
           <option>Earned Leave</option>
-          <option>Maternity Leave</option>
-          <option>Paternity Leave</option>
-          <option>Work From Home</option>
+        
         </select>
 
         {errors.leaveType && (
@@ -421,17 +418,23 @@ const LeaveForm = () => {
           Available Leave Balance
         </h3>
 
-        <p>
-          Casual Leave : <strong>8 Days</strong>
-        </p>
+        {user ? (
+          <>
+            <p>
+              Casual Leave : <strong>{user.leaveBalance.casual} Days</strong>
+            </p>
 
-        <p>
-          Sick Leave : <strong>12 Days</strong>
-        </p>
+            <p>
+              Sick Leave : <strong>{user.leaveBalance.sick} Days</strong>
+            </p>
 
-        <p>
-          Earned Leave : <strong>15 Days</strong>
-        </p>
+            <p>
+              Earned Leave : <strong>{user.leaveBalance.earned} Days</strong>
+            </p>
+          </>
+        ) : (
+          <p style={{ color: "#dc2626" }}>Unable to load leave balance.</p>
+        )}
       </div>
 
       {/* Buttons */}
