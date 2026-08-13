@@ -228,3 +228,190 @@ src/
 ├── styles/
 │
 └── utils/
+
+## Technologies Used
+
+- **React**
+- **TypeScript**
+- **Vite**
+- **React Router DOM**
+- **Local Storage API**
+- **CSS**
+
+---
+
+## Application Workflow
+
+### Employee Workflow
+
+```text
+Login
+  ↓
+Employee Dashboard
+  ↓
+Apply Leave
+  ↓
+Validation
+  ↓
+Pending Request
+  ↓
+Manager Review
+  ↓
+ ┌───────────────┬───────────────┐
+ ↓               ↓               ↓
+Approved       Rejected       Cancelled
+ ↓               ↓               ↓
+Balance        No Balance     No Balance
+Deducted       Deduction      Deduction
+```
+
+### Manager Workflow
+
+```text
+Login
+  ↓
+Manager Dashboard
+  ↓
+Review Leave Requests
+  ↓
+Search / Filter / Sort
+  ↓
+Select Pending Request
+  ↓
+ ┌──────────────┐
+ ↓              ↓
+Approve       Reject
+ ↓              ↓
+Balance       Rejection
+Deducted       Reason
+```
+
+---
+
+## Test Accounts
+
+### Employees
+
+| Username | Password |
+|----------|----------|
+| anuj | 1234 |
+| rahul | 1234 |
+| priya | 1234 |
+| amit | 1234 |
+| sneha | 1234 |
+| vikram | 1234 |
+
+### Managers
+
+| Username | Password |
+|----------|----------|
+| manager1 | admin123 |
+| manager2 | admin123 |
+
+> **Note:** These are mock credentials intended only for development and demonstration purposes.
+
+---
+
+## Git Workflow
+
+The project follows a feature-branch workflow.
+
+```text
+main
+│
+└── develop
+    │
+    ├── feature/login-role-selection
+    ├── feature/employee-dashboard
+    ├── feature/apply-leave-form
+    ├── feature/leave-history
+    ├── feature/manager-dashboard
+    ├── feature/manager-review-page
+    └── feature/dynamic-leave-balance
+```
+
+### Development Workflow
+
+1. Create a separate feature branch from `develop`.
+2. Implement the feature or enhancement.
+3. Test the changes locally.
+4. Commit the changes with a descriptive commit message.
+5. Push the feature branch to GitHub.
+6. Create a Pull Request targeting `develop`.
+7. Address review comments.
+8. Push additional commits to the same branch when changes are requested.
+9. Merge the Pull Request after review and approval.
+
+Each Pull Request is intended to remain focused on a specific feature or enhancement.
+
+---
+
+## Validation & Error Handling
+
+The application performs frontend validation for important leave workflows, including:
+
+- Missing leave type
+- Missing start date
+- Missing end date
+- Invalid date ranges
+- Insufficient leave balance
+- Overlapping leave requests
+- Missing leave reason
+- Invalid user/session state
+- Invalid manager actions
+
+---
+
+## Future Enhancements
+
+The following improvements are planned for future iterations:
+
+- Complete Employee Leave History search and filtering
+- Manager-to-employee mapping
+- More realistic initial mock leave-request data
+- Automated/component testing
+- Complete responsive design for desktop and mobile
+- Improved documentation
+- Charts and analytics
+- Email notifications
+- Backend API integration
+- Database integration
+- CI/CD pipeline
+
+---
+
+## Testing
+
+The application is currently tested through local manual workflow verification.
+
+Important workflows include:
+
+- Employee login
+- Manager login
+- Leave application
+- Leave validation
+- Leave balance validation
+- Overlapping leave validation
+- Leave cancellation
+- Manager approval
+- Manager rejection
+- Leave balance deduction
+- Status updates
+- Local Storage persistence
+- Manager search, filtering, and sorting
+
+Automated/component testing will be added as part of the testing phase.
+
+---
+
+## Screenshots
+
+Screenshots will be added after the major application workflows and responsive behaviour are finalized.
+
+---
+
+## Author
+
+**Anuj Mahajan**
+
+GitHub: **[Anuj21XD](https://github.com/Anuj21XD)**
